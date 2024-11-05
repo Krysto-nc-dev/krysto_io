@@ -6,7 +6,7 @@ const HomeScreen = () => {
       <div className="text-center">
         <h1 className="text-5xl font-bold text-gray-800 mb-4">Bienvenue !</h1>
         <p className="text-xl text-gray-600 mb-8">
-          Ce site est actuellement en construction... 🏗️
+          Ce site est actuellement en construction... 🏗️ TEST GITHUB
         </p>
         <p className="text-lg text-gray-500 mb-8">
           Mais ne vous inquiétez pas, nos développeurs travaillent dur, à base
