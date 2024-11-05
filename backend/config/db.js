@@ -12,7 +12,7 @@ const connectDB = async () => {
       throw new Error('MongoDB URI is not defined');
     }
 
-    // Connexion à MongoDB
+    // Connexion à MongoDB sans options dépréciées
     const conn = await mongoose.connect(mongoURI);
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
