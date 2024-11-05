@@ -1,70 +1,172 @@
-# Getting Started with Create React App
+# Krysto.io Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bienvenue dans le projet **Krysto.io**. Cette application est une plateforme de gestion intégrée, construite avec un backend en Node.js/Express et un frontend en React. Le projet utilise Redux pour la gestion de l'état global et Tailwind CSS pour le design.
 
-## Available Scripts
+## Prérequis
 
-In the project directory, you can run:
+- [Node.js](https://nodejs.org/) version LTS
+- [MongoDB](https://www.mongodb.com/) pour la base de données
+- [PM2](https://pm2.keymetrics.io/) pour le déploiement en production du backend
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Clonez le projet :
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+git clone https://github.com/votre-utilisateur/krysto.io.git
+cd krysto.io
+```
 
-### `npm test`
+Installez les dépendances pour le backend et le frontend :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# Backend
+cd backend
+npm install
 
-### `npm run build`
+# Frontend
+cd ../frontend
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Variables d'Environnement
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Créez un fichier `.env` dans le répertoire `backend` avec les variables suivantes :
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```plaintext
+NODE_ENV=development
+PORT=4000
 
-### `npm run eject`
+MONGO_URI_DEV=<votre-mongo-uri-dev>
+MONGO_URI_PROD=<votre-mongo-uri-prod>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+JWT_SECRET=<votre-secret-jwt>
+JWT_EXPIRE=30d
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+DOLAPIKEY=<votre-api-key-dolibarr>
+DOLIBARR_API_URL=<url-de-votre-api-dolibarr>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+SMTP_HOST=smtp.hostinger.com
+SMTP_PORT=465
+SMTP_EMAIL=support@krysto.io
+SMTP_PASSWORD=<votre-mot-de-passe-smtp>
+FROM_NAME="Stoyann de Krysto"
+FROM_EMAIL=support@krysto.io
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+prodBaseUrl=https://api.krysto.io
+devBaseUrl=http://localhost:4000
+```
 
-## Learn More
+## Lancer l'Application en Développement
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Backend
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Dans le répertoire `backend`, lancez le serveur en mode développement :
 
-### Code Splitting
+```bash
+npm run dev
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Le backend sera accessible à `http://localhost:4000`.
 
-### Analyzing the Bundle Size
+### Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Dans le répertoire `frontend`, lancez l'application en mode développement :
 
-### Making a Progressive Web App
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Le frontend sera accessible à `http://localhost:3000`.
 
-### Advanced Configuration
+## Scripts Disponibles
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Backend
 
-### Deployment
+- `npm start` : Démarre le serveur en production.
+- `npm run dev` : Démarre le serveur en mode développement avec `nodemon` pour le rechargement automatique.
+- `npm run data:import` : Importe les données initiales dans la base MongoDB.
+- `npm run data:destroy` : Supprime les données de la base MongoDB.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Frontend
 
-### `npm run build` fails to minify
+- `npm start` : Démarre le frontend en mode développement.
+- `npm run build` : Construit l'application React pour la production dans le dossier `build`.
+- `npm run test` : Exécute les tests en mode interactif.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Déploiement en Production
+
+### Backend
+
+1. **Build du Frontend** : Dans le dossier `frontend`, construisez l'application pour la production :
+
+   ```bash
+   npm run build
+   ```
+
+2. **Copie des fichiers** : Transférez les fichiers de `frontend/build` sur le VPS dans le répertoire souhaité.
+
+3. **Démarrage avec PM2** : Démarrez le backend avec PM2 :
+
+   ```bash
+   pm2 start server.js --name krysto_backend
+   pm2 save
+   pm2 startup
+   ```
+
+### Configuration de Nginx
+
+Configurez Nginx pour servir le frontend et proxifier les requêtes backend. Voici un exemple de configuration pour Nginx :
+
+```nginx
+server {
+    listen 80;
+    server_name krysto.io www.krysto.io;
+
+    location / {
+        root /chemin/vers/frontend/build;
+        try_files $uri /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://localhost:4000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+### HTTPS avec Certbot
+
+Pour sécuriser le site avec HTTPS :
+
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d krysto.io -d www.krysto.io
+```
+
+Certbot configurera automatiquement Nginx pour rediriger le trafic HTTP vers HTTPS.
+
+## Fonctionnalités
+
+- **Authentification JWT** : Connexion sécurisée avec JSON Web Tokens.
+- **API Dolibarr** : Intégration avec l'API Dolibarr pour gérer les opérations de l'entreprise.
+- **Notifications par Email** : Envoi d'emails via SMTP pour les notifications et alertes.
+- **Gestion des utilisateurs** : Création, modification, et suppression de profils utilisateurs.
+
+## Technologies Utilisées
+
+- **Backend** : Node.js, Express, MongoDB, JWT, Nodemailer
+- **Frontend** : React, Redux, Tailwind CSS, Axios
+- **Outils de Déploiement** : PM2, Nginx, Certbot (Let’s Encrypt)
+
+## Contributions
+
+Les contributions sont les bienvenues ! N'hésitez pas à forker le projet et à proposer des pull requests.
+
+## License
+
+Ce projet est sous licence MIT. Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
