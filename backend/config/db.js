@@ -7,14 +7,17 @@ const connectDB = async () => {
       ? process.env.MONGO_URI_PROD
       : process.env.MONGO_URI_DEV;
 
-    const conn = await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    // Vérifie que l'URI existe
+    if (!mongoURI) {
+      throw new Error('MongoDB URI is not defined');
+    }
+
+    // Connexion à MongoDB
+    const conn = await mongoose.connect(mongoURI);
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.log(`Error: ${error.message}`);
+    console.error(`Error: ${error.message}`);
     process.exit(1);
   }
 };

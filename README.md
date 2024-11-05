@@ -50,7 +50,7 @@ SMTP_HOST=smtp.hostinger.com
 SMTP_PORT=465
 SMTP_EMAIL=support@krysto.io
 SMTP_PASSWORD=<votre-mot-de-passe-smtp>
-FROM_NAME="Stoyann de Krysto"
+FROM_NAME="L'équipe de Krysto"
 FROM_EMAIL=support@krysto.io
 
 prodBaseUrl=https://api.krysto.io
