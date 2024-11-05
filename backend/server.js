@@ -38,7 +38,8 @@ app.use(cookieParser());
 
 // Middleware d'options pour les requêtes CORS
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', isProduction ? process.env.prodBaseUrl : '*');
+  res.header('Access-Control-Allow-Origin', '*'); // Permettre toutes les origines (temporaire pour le débogage)
+
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type, Accept');
   res.sendStatus(204);
