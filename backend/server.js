@@ -35,9 +35,7 @@ const allowedOrigins = [
 app.use(cors({
   credentials: true,
   origin: function (origin, callback) {
-    // Si aucune origine n'est spécifiée (ex : requêtes locales), autorise l'accès
     if (!origin) return callback(null, true);
-    // Vérifie si l'origine est dans la liste des origines autorisées
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg = 'La politique CORS ne permet pas l\'accès depuis cette origine.';
       return callback(new Error(msg), false);
@@ -67,10 +65,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename(req, file, cb) {
-    cb(
-      null,
-      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
-    );
+    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
   }
 });
 
@@ -84,16 +79,13 @@ const fileFilter = (req, file, cb) => {
   cb('Erreur : uniquement des images (JPEG, PNG, GIF) sont autorisées.');
 };
 
-const upload = multer({
-  storage,
-  fileFilter
-});
+const upload = multer({ storage, fileFilter });
 
 // Route pour téléverser une image
 app.post('/api/upload', upload.single('cover'), (req, res) => {
   res.send({
     message: 'Image téléchargée avec succès',
-    image: `/${req.file.filename}`
+    image: `/uploads/${req.file.filename}`
   });
 });
 
