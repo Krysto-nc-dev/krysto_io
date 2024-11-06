@@ -39,14 +39,13 @@ app.use(cookieParser());
 // Middleware d'options pour les requêtes CORS
 app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*'); // Permettre toutes les origines (temporaire pour le débogage)
-
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type, Accept');
   res.sendStatus(204);
 });
 
-// Définition des routes
-app.use('/users', userRoutes);
+// Définition des routes API
+app.use('/api/users', userRoutes);
 
 const __dirname = path.resolve();
 
@@ -79,14 +78,14 @@ const upload = multer({
 });
 
 // Route pour téléverser une image
-app.post('/upload', upload.single('cover'), (req, res) => {
+app.post('/api/upload', upload.single('cover'), (req, res) => {
   res.send({
     message: 'Image téléchargée avec succès',
     image: `/${req.file.filename}`
   });
 });
 
-// Serveur de fichiers statiques
+// Serveur de fichiers statiques pour les uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Configuration de Nodemailer pour envoi d'email
@@ -101,7 +100,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Route exemple pour envoi d'email
-app.post('/send-email', async (req, res) => {
+app.post('/api/send-email', async (req, res) => {
   try {
     const info = await transporter.sendMail({
       from: `"${process.env.FROM_NAME}" <${process.env.FROM_EMAIL}>`,
@@ -118,11 +117,13 @@ app.post('/send-email', async (req, res) => {
 
 // Configuration de production pour servir le frontend
 if (isProduction) {
-  app.use(express.static(path.join(__dirname, '/frontend/build')));
+  // Servir les fichiers statiques du frontend
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-  );
+  // Route pour toutes les routes non-API (SPA fallback)
+  app.get(/^\/(?!api).*/, (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
+  });
 } else {
   app.get('/', (req, res) => {
     res.send('API is running in development mode...');
