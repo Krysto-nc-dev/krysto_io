@@ -27,8 +27,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configuration CORS en fonction de l'environnement
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://krysto.io',
+  'https://api.krysto.io'
+];
 app.use(cors({
-  origin: isProduction ? process.env.prodBaseUrl : process.env.devBaseUrl,
+  credentials: true,
+  origin: function (origin, callback) {
+    // Si aucune origine n'est spécifiée (ex : requêtes locales), autorise l'accès
+    if (!origin) return callback(null, true);
+    // Vérifie si l'origine est dans la liste des origines autorisées
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'La politique CORS ne permet pas l\'accès depuis cette origine.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Authorization', 'Content-Type', 'Accept']
 }));
@@ -36,11 +51,8 @@ app.use(cors({
 // Middleware pour les cookies
 app.use(cookieParser());
 
-// Middleware d'options pour les requêtes CORS
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*'); // Permettre toutes les origines (temporaire pour le débogage)
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type, Accept');
+// Middleware pour les requêtes OPTIONS (pré-vol) avec CORS
+app.options('*', cors(), (req, res) => {
   res.sendStatus(204);
 });
 
@@ -49,7 +61,7 @@ app.use('/api/users', userRoutes);
 
 const __dirname = path.resolve();
 
-// Configuration de Multer pour téléversement des fichiers
+// Configuration de Multer pour le téléversement des fichiers
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, 'uploads/');
@@ -69,7 +81,7 @@ const fileFilter = (req, file, cb) => {
   if (mimetype && extname) {
     return cb(null, true);
   }
-  cb('Error: Images Only!');
+  cb('Erreur : uniquement des images (JPEG, PNG, GIF) sont autorisées.');
 };
 
 const upload = multer({
@@ -88,7 +100,7 @@ app.post('/api/upload', upload.single('cover'), (req, res) => {
 // Serveur de fichiers statiques pour les uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Configuration de Nodemailer pour envoi d'email
+// Configuration de Nodemailer pour l'envoi d'email
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
@@ -99,7 +111,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Route exemple pour envoi d'email
+// Route pour envoyer un email
 app.post('/api/send-email', async (req, res) => {
   try {
     const info = await transporter.sendMail({
@@ -117,7 +129,7 @@ app.post('/api/send-email', async (req, res) => {
 
 // Configuration de production pour servir le frontend
 if (isProduction) {
-  // Servir les fichiers statiques du frontend
+  // Serve les fichiers statiques du frontend
   app.use(express.static(path.join(__dirname, '../frontend/build')));
 
   // Route pour toutes les routes non-API (SPA fallback)
@@ -126,7 +138,7 @@ if (isProduction) {
   });
 } else {
   app.get('/', (req, res) => {
-    res.send('API is running in development mode...');
+    res.send('API est en mode développement...');
   });
 }
 
@@ -136,5 +148,5 @@ app.use(errorHandler);
 
 // Lancement du serveur
 app.listen(port, () => {
-  console.log(`Server running on port ${port} in ${isProduction ? 'Production' : 'Development'} mode`);
+  console.log(`Serveur en cours d'exécution sur le port ${port} en mode ${isProduction ? 'Production' : 'Développement'}`);
 });
