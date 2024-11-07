@@ -6,7 +6,7 @@ const HomeScreen = () => {
     <div className="mt-20">
       {/* <HomeHero/> */}
       <div className="w-[50%]">
-        <h1 className="text-6xl">
+        <h1 className="text-4xl">
           Le <span className="text-primaryColor font-bold">Changement</span>{" "}
           commence localement.
         </h1>

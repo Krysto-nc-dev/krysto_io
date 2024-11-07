@@ -18,15 +18,22 @@ import UserRoutes from "./components/utils/UserRoutes.jsx";
 import LoginScreen from "./screens/site/LoginScreen.jsx";
 import AdminDashboard from "./screens/admin/AdminDashboard.jsx";
 import AdminUsersScreen from "./screens/admin/AdminUsersScreen.jsx";
-import PublicLayout from './components/layouts/PublicLayout';
+import PublicLayout from "./components/layouts/PublicLayout";
+import InitiationsScreen from "./screens/site/InitiationsScreen.jsx";
+import BoutiqueScreen from "./screens/site/BoutiqueScreen.jsx";
+import NotFound from "./screens/NotFound.jsx";
+import RegisterScreen from "./screens/site/RegisterScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      {/* Public Routes */}
       <Route path="/connexion" element={<LoginScreen />} />
+      <Route path="/register" element={<RegisterScreen />} />
+      {/* Public Routes */}
       <Route path="/" element={<PublicLayout />}>
-      <Route index={true} path="/" element={<HomeScreen />} />
+        <Route index={true} path="/" element={<HomeScreen />} />
+        <Route path="/initiations" element={<InitiationsScreen />} />
+        <Route path="/boutique" element={<BoutiqueScreen />} />
       </Route>
 
       {/* Private Routes */}
@@ -37,8 +44,8 @@ const router = createBrowserRouter(
       {/* Admin Routes */}
       <Route path="/" element={<AdminRoutes />}>
         {/* Routes spécifiques aux administrateurs */}
-      <Route path="/admin-dashboard" element={<AdminDashboard/>} />
-      <Route path="/admin-users" element={<AdminUsersScreen/>} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-users" element={<AdminUsersScreen />} />
       </Route>
 
       {/* User Routes */}
@@ -47,7 +54,7 @@ const router = createBrowserRouter(
       </Route>
 
       {/* Route générique pour gérer toutes les autres routes non définies */}
-      {/* <Route path="*" element={<NotFoundScreen />} /> */}
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );

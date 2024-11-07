@@ -4,14 +4,11 @@ import AdminSidebar from "../global/AdminSidebar";
 
 const AdminLayout = ({ children }) => {
   return (
-  <>
-    <AdminSidebar />
- 
-   
+    <>
+      <AdminSidebar />
+
       <div style={{ padding: "16px" }}>{children}</div>
-  
- 
-  </>
+    </>
   );
 };
 

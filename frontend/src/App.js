@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div>
       <ScrollToTop />
-      <div className="bg-backgroundColor">
+      <div className="bg-gray-100">
         <div>
           <Outlet />
         </div>

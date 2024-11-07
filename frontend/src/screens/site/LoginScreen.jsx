@@ -113,8 +113,7 @@ import { toast } from "react-toastify";
 import { useLoginMutation } from "../../slices/userApiSlice";
 import { setCredentials } from "../../slices/authSlice";
 import backgroundImage from "../../assets/pollutions_mer.jpeg";
-import { Loader, MoveLeftIcon, MoveRightIcon } from "lucide-react";
-import { BsFacebook, BsGoogle } from "react-icons/bs";
+import { Loader, MoveRightIcon } from "lucide-react";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -123,31 +122,41 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Mutation pour la connexion utilisateur
   const [login, { isLoading }] = useLoginMutation();
 
+  // Sélection de userInfo depuis le store pour vérifier le statut de connexion
   const { userInfo } = useSelector((state) => state.auth);
 
+  // Récupération des paramètres de l'URL pour potentiellement rediriger l'utilisateur
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const redirect = sp.get("redirect") || "/";
 
+  // Utilisation de useEffect pour surveiller les changements dans userInfo et gérer les redirections
   useEffect(() => {
     if (userInfo) {
-      if (userInfo.isAdmin) {
+      if (userInfo.role === "Admin") {
+        // Redirection si l'utilisateur est administrateur
         navigate("/admin-dashboard");
       } else if (userInfo.role === "User") {
-        navigate("/dashboard");
+        // Redirection pour les utilisateurs normaux
+        navigate("/user-dashboard");
       } else {
+        // Redirection vers la page par défaut
         navigate(redirect);
       }
     }
   }, [navigate, redirect, userInfo]);
 
+  // Gestionnaire de soumission du formulaire de connexion
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      // Appel de la mutation de connexion avec les informations d'authentification
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
+      // Redirection après connexion réussie
       navigate(redirect);
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -155,79 +164,69 @@ const LoginScreen = () => {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="relative flex flex-col m-6 space-y-10 bg-gray-700 shadow-2xl rounded-2xl md:flex-row md:space-y-0 md:m-0">
-          {/* left side  */}
-          <div className="p-4 md:p-20 ">
-            {/* top content */}
-            <h2 className="mb-5 text-4xl font-bold ">Connection</h2>
-            <p className="max-w-md mb-8 font-light">
-              Connectez-vous à votre compte pour profiter de notre plateforme.
-            </p>
-            <form onSubmit={submitHandler}>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-3 border border-textColor rounded-md placeholder:font-light mb-3 "
-                placeholder="Entrez votre addresse"
-              />
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-3 border border-textColor rounded-md placeholder:font-light "
-                placeholder="Entrez votre mot de passe"
-              />
-              <button
-                type="submit"
-                className="w-full mt-6  flex justify-center items-center p-3 space-x-4 font-bold  rounded-md  px-9  bg-primaryColor shadow-gray-600 hover:bg-opacity-90 shadow-sm hover:shadow-lg transition hover:-translate-y-0.5 duration-150"
-              >
-                {isLoading ? <Loader /> : "Connexion"}
-              </button>
-            </form>
-            <div className="flex items-center justify-between mt-6">
-              <Link
-                to="/register"
-                className="text-primaryColor hover:text-opacity-90"
-              >
-                Créer un compte
-              </Link>
-              <Link
-                to="/forgot-password"
-                className="text-primaryColor hover:text-opacity-90"
-              >
-                Mot de passe oublié ?
-              </Link>
-            </div>
-
-            {/* middle-content */}
-
-            <div className="mt-8 border-b border-b-gray-200"></div>
-
-            <div className="flex flex-col items-center justify-between mt-6 space-y-6 md:flex-row md:space-y-0">
-              <Link
-                to={"/"}
-                className="w-full  flex justify-center items-center p-3 space-x-4 font-bold text-white  rounded-md  px-9  bg-primaryColor shadow-gray-600 hover:bg-opacity-90 shadow-sm hover:shadow-lg  transition hover:-translate-y-0.5 duration-150"
-              >
-                <MoveRightIcon className="mr-5" />
-                Retour au site
-              </Link>
-            </div>
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="relative flex flex-col m-6 space-y-6 bg-gray-800 shadow-2xl rounded-2xl md:flex-row md:space-y-0 md:m-0">
+        {/* Partie gauche du formulaire */}
+        <div className="p-4 md:p-20">
+          <h2 className="mb-5 text-4xl font-bold text-gray-500">Connexion</h2>
+          <p className="max-w-md mb-8 font-light text-gray-400">
+            Connectez-vous à votre compte pour profiter de notre plateforme.
+          </p>
+          <form onSubmit={submitHandler}>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 border border-gray-400 rounded-md placeholder-gray-500 mb-3"
+              placeholder="Entrez votre adresse e-mail"
+            />
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 border border-gray-400 rounded-md placeholder-gray-500"
+              placeholder="Entrez votre mot de passe"
+            />
+            <button
+              type="submit"
+              className="w-full mt-6 flex justify-center items-center p-3 font-bold rounded-md bg-blue-600 text-white hover:bg-blue-700"
+            >
+              {isLoading ? <Loader className="animate-spin" /> : "Connexion"}
+            </button>
+          </form>
+          <div className="flex items-center justify-between mt-6">
+            <Link to="/register" className="text-blue-600 hover:underline">
+              Créer un compte
+            </Link>
+            <Link
+              to="/forgot-password"
+              className="text-blue-600 hover:underline"
+            >
+              Mot de passe oublié ?
+            </Link>
           </div>
-
-          {/* right side  */}
-          <img
-            src={backgroundImage}
-            className="w-[600px] hidden md:block object-cover rounded-r-2xl"
-            alt="Bouchons de bouteilles en plastique"
-          />
+          {/* Bouton pour retourner au site principal */}
+          <div className="mt-8">
+            <Link
+              to="/"
+              className="w-full flex justify-center items-center p-3 mt-6 font-bold text-white bg-blue-600 rounded-md hover:bg-blue-700"
+            >
+              <MoveRightIcon className="mr-3" />
+              Retour au site
+            </Link>
+          </div>
         </div>
+
+        {/* Section droite avec image */}
+        <img
+          src={backgroundImage}
+          className="w-[600px] hidden md:block object-cover rounded-r-2xl"
+          alt="Bouchons de bouteilles en plastique"
+        />
       </div>
-    </>
+    </div>
   );
 };
 

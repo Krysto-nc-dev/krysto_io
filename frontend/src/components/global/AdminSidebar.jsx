@@ -1,10 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../slices/authSlice'; // Assurez-vous que le chemin d'import est correct
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../slices/authSlice"; // Assurez-vous que le chemin d'import est correct
 
 const AdminSidebar = ({ children }) => {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
 
   // Fonction de déconnexion
   const handleLogout = () => {
@@ -12,81 +13,71 @@ const AdminSidebar = ({ children }) => {
   };
 
   return (
-    <div className="navbar bg-base-100">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-gray-800 text-white transform ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-200 ease-in-out md:relative md:translate-x-0`}
+      >
+        <div className="p-4 font-bold text-xl">Krysto Administration</div>
+        <ul className="mt-4 space-y-2">
+          <li>
+            <Link
+              to="/admin-dashboard"
+              className="block px-4 py-2 hover:bg-gray-700"
+            >
+              Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/admin-users"
+              className="block px-4 py-2 hover:bg-gray-700"
+            >
+              Utilisateurs
+            </Link>
+          </li>
+        </ul>
+        <button
+          onClick={handleLogout}
+          className="w-full px-4 py-2 mt-4 text-left hover:bg-gray-700"
+        >
+          Déconnexion
+        </button>
+      </div>
+
+      {/* Content area */}
+      <div className="flex-1 flex flex-col">
+        {/* Navbar */}
+        <div className="flex items-center justify-between bg-gray-100 p-4 shadow-md">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-gray-800 focus:outline-none md:hidden"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h7" />
+                d="M4 6h16M4 12h16M4 18h7"
+              />
             </svg>
+          </button>
+          <div className="text-xl font-bold">Krysto Administration</div>
+          <div className="flex space-x-4">
+            {/* Search and notifications icons can be added here if needed */}
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-300 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-            <li><Link to={'/admin-dashboard'}>Dashboard</Link></li>
-            <li><Link to={'/admin-users'}>Utilisateurs</Link></li>
-          </ul>
         </div>
-      </div>
-      <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">Krysto administration</a>
-      </div>
-      <div className="navbar-end">
-        <button className="btn btn-ghost btn-circle">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </button>
-        <button className="btn btn-ghost btn-circle">
-          <div className="indicator">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-            <span className="badge badge-xs badge-primary indicator-item"></span>
-          </div>
-        </button>
-        {/* Bouton de déconnexion */}
-        <button onClick={handleLogout} className="btn btn-ghost btn-circle">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17 16l4-4m0 0l-4-4m4 4H7" />
-          </svg>
-        </button>
+
+        {/* Main content */}
+        <div className="p-4">{children}</div>
       </div>
     </div>
   );

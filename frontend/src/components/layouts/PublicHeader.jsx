@@ -58,7 +58,7 @@ const PublicHeader = () => {
             </Link>
             <Link
               className="flex items-center text-white hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
-              to={"/krysto-shop"}
+              to={"/boutique"}
             >
               <ShoppingBasket className="w-[20px] mr-2" /> Nos produits
             </Link>
@@ -66,7 +66,7 @@ const PublicHeader = () => {
               className="flex items-center text-white hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
               to={"/initiations"}
             >
-              <RecycleIcon className="w-[20px] mr-2" /> Initiations
+              <RecycleIcon className="w-[20px] mr-2" /> initiations
             </Link>
             <Link
               className="flex items-center text-white hover:text-secondaryColor hover:font-bold transition hover:-translate-y-0.5 duration-150"
@@ -137,7 +137,7 @@ const PublicHeader = () => {
             </Link>
             <Link
               className="flex items-center text-white hover:text-secondaryColor hover:font-bold"
-              to={"/krysto-shop"}
+              to={"/boutique"}
               onClick={toggleMobileMenu}
             >
               <ShoppingBasket className="w-[20px] mr-2" /> Nos produits
