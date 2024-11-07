@@ -19,7 +19,6 @@ const __dirname = path.dirname(__filename);
 const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 4000;
 
-// Affiche l'environnement actuel
 console.log(`L'application est en mode ${isProduction ? 'Production' : 'Développement'}`);
 
 // Connexion à la base de données
@@ -31,14 +30,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Configuration CORS en fonction de l'environnement
+// Configuration CORS
 const allowedOrigins = [
   'http://localhost:3000',
   'https://krysto.io',
   'https://api.krysto.io'
 ];
 app.use(cors({
-  credentials: true,
+  credentials: true, // Permet l'envoi des cookies
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
@@ -54,12 +53,12 @@ app.use(cors({
 // Middleware pour les cookies
 app.use(cookieParser());
 
-// Middleware pour les requêtes OPTIONS (pré-vol) avec CORS
-app.options('*', cors(), (req, res) => {
+// Requêtes pré-vol (OPTIONS)
+app.options('*', (req, res) => {
   res.sendStatus(204);
 });
 
-// Définition des routes API
+// Routes de l'API
 app.get('/', (req, res) => {
   res.send('API is running');
 });
@@ -94,7 +93,7 @@ app.post('/upload', upload.single('cover'), (req, res) => {
 // Serveur de fichiers statiques pour les uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Configuration de Nodemailer pour l'envoi d'email
+// Configuration de Nodemailer
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
@@ -120,7 +119,7 @@ app.post('/send-email', async (req, res) => {
   }
 });
 
-// Middlewares de gestion des erreurs
+// Gestion des erreurs
 app.use(notFound);
 app.use(errorHandler);
 

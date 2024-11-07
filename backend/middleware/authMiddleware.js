@@ -29,7 +29,7 @@ const admin = (req, res, next) => {
     next()
   } else {
     res.status(401)
-    throw new Error("Non autorisé en tant qu'admin")
+    throw new Error("Vous devez etre administrateur pour accéder à cette ressource")
   }
 }
 
