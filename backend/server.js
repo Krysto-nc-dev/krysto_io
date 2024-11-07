@@ -122,11 +122,11 @@ app.post('/api/send-email', async (req, res) => {
 // Configuration de production pour servir le frontend
 if (isProduction) {
   // Serve les fichiers statiques du frontend
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
+  app.use(express.static(path.join(__dirname, 'client')));
 
   // Route pour toutes les routes non-API (SPA fallback)
   app.get(/^\/(?!api).*/, (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client', 'index.html'));
   });
 } else {
   app.get('/', (req, res) => {
