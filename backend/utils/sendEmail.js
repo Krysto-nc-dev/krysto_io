@@ -1,5 +1,5 @@
 // ../utils/sendEmail.js
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
 
 const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
@@ -10,18 +10,19 @@ const sendEmail = async (options) => {
       user: process.env.SMTP_EMAIL,
       pass: process.env.SMTP_PASSWORD,
     },
-  })
+  });
 
   const message = {
     from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
     to: options.email,
     subject: options.subject,
-    text: options.message,
-  }
+    // Si options.isHtml est vrai, utilise le contenu HTML, sinon utilise le texte brut
+    [options.isHtml ? 'html' : 'text']: options.message,
+  };
 
-  const info = await transporter.sendMail(message)
+  const info = await transporter.sendMail(message);
 
-  console.log('Message sent: %s', info.messageId)
-}
+  console.log('Message sent: %s', info.messageId);
+};
 
-export default sendEmail
+export default sendEmail;
