@@ -23,6 +23,7 @@ import InitiationsScreen from "./screens/site/InitiationsScreen.jsx";
 import BoutiqueScreen from "./screens/site/BoutiqueScreen.jsx";
 import NotFound from "./screens/NotFound.jsx";
 import RegisterScreen from "./screens/site/RegisterScreen.jsx";
+import ProductScreen from "./screens/site/ProductScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
         <Route index={true} path="/" element={<HomeScreen />} />
         <Route path="/initiations" element={<InitiationsScreen />} />
         <Route path="/boutique" element={<BoutiqueScreen />} />
+        <Route path='/product/:id' element={<ProductScreen/>} />
       </Route>
 
       {/* Private Routes */}
