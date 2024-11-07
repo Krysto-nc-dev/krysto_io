@@ -1,24 +1,28 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HomeScreen = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-5xl font-bold text-gray-800 mb-4">Bienvenue !</h1>
-        <p className="text-xl text-gray-600 mb-8">
-          Ce site est actuellement en construction... 🏗️ TEST GITHUB
+    <div className="mt-20">
+      {/* <HomeHero/> */}
+      <div className="w-[50%]">
+        <h1 className="text-6xl">
+          Le <span className="text-primaryColor font-bold">Changement</span>{" "}
+          commence localement.
+        </h1>
+        <p className="mt-3">
+          Krysto est une entreprise de recyclage qui s'engage à réduire les
+          déchets plastiques en les transformant en objets utiles et design.
         </p>
-        <p className="text-lg text-gray-500 mb-8">
-          Mais ne vous inquiétez pas, nos développeurs travaillent dur, à base
-          de café ☕ et de lignes de code 👨‍💻👩‍💻
-        </p>
-        <div className="animate-pulse">
-          <span className="text-9xl">🚧</span>
-        </div>
 
-        <p className="text-md text-gray-500 mt-8">
-          Revenez bientôt pour voir ce que l'on construit pour vous !
-        </p>
+        <div className="mt-10 flex items-center gap-3">
+          <Link to={"/a-propos"} className="btn btn-primary">
+            En savoir plus
+          </Link>
+          <Link to={"/krysto-shop"} className="btn btn-primary">
+            Découvrir
+          </Link>
+        </div>
       </div>
     </div>
   );

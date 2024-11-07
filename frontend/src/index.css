@@ -1,3 +1,222 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primaryColor: #9196ca; /* Couleur principale */
+  --secondaryColor: #7ec7b8; /* Couleur secondaire */
+  --accentColor: #ffd700; /* Couleur accent, ici un jaune doré */
+  --textColor: #ffffff; /* Couleur de texte, un gris foncé pour le contraste */
+  --backgroundColor: #333333; /* Couleur de fond, blanc pour la lisibilité */
+  --grayColor: #949494; /* Couleur de fond, blanc pour la lisibilité */
+  --highlightColor: #f5f5dc; /* Couleur de surbrillance, un beige clair */
+  --mutedColor: #d3d3d3; /* Couleur atténuée, un gris clair pour les éléments moins importants */
+  --dangerColor: #e57373; /* Couleur d'alerte, un rouge adouci */
+  --warningColor: #ffb74d; /* Couleur d'avertissement, un orange adouci */
+  --successColor: #1c9222; /* Couleur de succès, un vert adouci */
+}
+
+.btn {
+  @apply w-full  flex justify-center items-center p-3 space-x-3 font-bold text-white  rounded-md  px-5  bg-primaryColor shadow-gray-500 hover:bg-secondaryColor shadow-sm hover:shadow-lg  transition hover:-translate-y-0.5 duration-150;
+}
+/* custom-toast-styles.css */
+.Toastify__toast-body {
+  font-size: 12px;
+  color: var(--textColor);
+}
+
+.Toastify__toast {
+  background-color: var(--backgroundColor);
+}
+
+body {
+  @apply text-[20px] text-textColor bg-backgroundColor;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  color: #000;
+  animation: spin 1s infinite linear;
+}
+
+input {
+  @apply outline-none focus:outline-none focus:ring-2 focus:ring-primaryColor p-2 text-backgroundColor;
+}
+
+@media (min-width: 1200px) {
+  .bg-hero {
+    width: 2000px;
+    height: 300px;
+    left: 30%;
+    @apply absolute rounded-l-full top-52 bg-primaryColor;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    line-height: 1.3;
+  }
+
+  table {
+  }
+  th,
+  td {
+    @apply py-3 px-2.5 text-sm text-left border-y border-primaryColor;
+  }
+  thead {
+    @apply bg-primaryColor;
+  }
+  th {
+    @apply font-semibold;
+  }
+  a {
+    @apply text-blue-300 hover:no-underline;
+  }
+}
+
+.card {
+  @apply bg-gray-700 text-gray-100 rounded-lg shadow-md m-4 text-sm cursor-pointer;
+}
+
+.card:hover {
+  transform: scale(1.02); /* Zoom léger */
+}
+
+/* UserCalendar.css */
+.fc {
+  --fc-bg-color: var(--backgroundColor);
+  --fc-text-color: var(--textColor);
+  --fc-border-color: var(--primaryColor);
+  --fc-daygrid-event-dot-width: 10px;
+  --fc-today-bg-color: var(--highlightColor);
+}
+
+.fc .fc-toolbar {
+  margin-bottom: 1rem;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.25rem;
+  color: var(--primaryColor);
+}
+
+.fc .fc-button {
+  background-color: transparent;
+  border: none;
+  color: #000;
+}
+
+.fc .fc-button:hover {
+  background-color: var(--secondaryColor);
+  color: #fff;
+}
+
+.fc .fc-button.fc-button-active {
+  border: none;
+  background-color: var(--secondaryColor);
+  color: #fff;
+}
+
+.fc .fc-button:disabled {
+  background-color: var(--mutedColor);
+}
+
+.fc .fc-daygrid-event {
+  background-color: var(--accentColor);
+  border: none;
+  color: white;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* drag and drop styling */
+
+.task-board {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background-color: #f0f0f0;
+}
+
+.task-column {
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 10px;
+  height: 30rem;
+}
+
+.task-column h2 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.task-column.to-do {
+  background-color: red; /* Yellow for To Do */
+  width: 30%;
+}
+
+.task-column.in-progress {
+  background-color: orange; /* Blue for In Progress */
+  width: 30%;
+}
+
+.task-column.done {
+  background-color: #4caf50; /* Green for Done */
+  width: 30%;
+}
+
+.task-card {
+  border-radius: 8px; /* Rounded corners */
+  padding: 16px; /* Padding inside the card */
+  margin-bottom: 8px; /* Space between cards */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: transform 0.2s ease; /* Smooth transition for transform */
+  border: none; /* Remove border */
+}
+
+.task-card.overlay {
+  opacity: 0; /* Make the overlay card disappear completely */
+  pointer-events: none; /* Ensure it doesn't interfere with interactions */
+}
+
+.drag-over {
+  background-color: #f0f0f0;
+}
+
+/* Additional styling for content inside the card */
+.task-card .content {
+  background-color: #ffffff; /* Background color for the content */
+  padding: 8px; /* Padding for the content */
+  border-radius: 8px; /* Rounded corners for the content */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for the content */
+}
+
+.todo {
+  background-color: red;
+}
+.inProgress {
+  background-color: orange;
+}
+.done {
+  background-color: green;
+}

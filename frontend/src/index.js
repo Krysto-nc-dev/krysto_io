@@ -18,13 +18,16 @@ import UserRoutes from "./components/utils/UserRoutes.jsx";
 import LoginScreen from "./screens/site/LoginScreen.jsx";
 import AdminDashboard from "./screens/admin/AdminDashboard.jsx";
 import AdminUsersScreen from "./screens/admin/AdminUsersScreen.jsx";
+import PublicLayout from './components/layouts/PublicLayout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       {/* Public Routes */}
-      <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/connexion" element={<LoginScreen />} />
+      <Route path="/" element={<PublicLayout />}>
+      <Route index={true} path="/" element={<HomeScreen />} />
+      </Route>
 
       {/* Private Routes */}
       <Route path="/" element={<PrivateRoutes />}>
