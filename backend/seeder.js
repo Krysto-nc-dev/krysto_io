@@ -8,6 +8,8 @@ import User from "./models/userModel.js";
 
 
 import connectDB from "./config/db.js";
+import Product from "./models/productModel.js";
+import products from "./data/products.js";
 
 dotenv.config();
 
@@ -17,13 +19,18 @@ const importData = async () => {
   try {
     // Suppression des données existantes
     await User.deleteMany();
+    await Product.deleteMany();
    
 
     // Insertion de nouvelles données
     const createdUsers = await User.insertMany(users);
     const adminUser = createdUsers[0]._id; // Récupération de l'administrateur
 
- 
+    const sampleProducts = products.map((product) => {
+      return { ...product, user: adminUser };
+    });
+
+    await Product.insertMany(sampleProducts);
 
     console.log("Data Imported!".green.inverse);
     process.exit();
@@ -36,6 +43,7 @@ const importData = async () => {
 const destroyData = async () => {
   try {
     await User.deleteMany();
+    await Product.deleteMany();
    
 
     console.log("Data Destroyed!".red.inverse);

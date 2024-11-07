@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from './constants';
 
+
 // Types de tags si tu les utilises dans d'autres appels API
 const tagTypes = [
   'User',
+  'Product'
   // ajoute d'autres tags si nécessaire
 ];
 
