@@ -4,7 +4,7 @@ import generateToken from '../utils/generateToken.js';
 import User from '../models/userModel.js';
 import ErrorResponse from '../utils/errorResponse.js';
 import sendEmail from '../utils/sendEmail.js';
-import { welcomeEmailTemplate, resetPasswordTemplate } from '../utils/emailTemplate.js';
+import { welcomeEmailTemplate, resetPasswordTemplate } from '../utils/emailsTemplate.js';
 
 // @desc Auth user & get token
 // @route POST /api/users/login
