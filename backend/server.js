@@ -55,11 +55,12 @@ app.options('*', cors(), (req, res) => {
 });
 
 // Définition des routes API
-app.use('/api/users', userRoutes);
+app.get('/', (req, res) => {
+  res.send('API is running');
+});
+app.use('/users', userRoutes);
 
-const __dirname = path.resolve();
-
-// Configuration de Multer pour le téléversement des fichiers
+// Gestion des téléversements avec Multer
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, 'uploads/');
@@ -68,7 +69,6 @@ const storage = multer.diskStorage({
     cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
   }
 });
-
 const fileFilter = (req, file, cb) => {
   const filetypes = /jpeg|jpg|png|gif/;
   const mimetype = filetypes.test(file.mimetype);
@@ -78,11 +78,8 @@ const fileFilter = (req, file, cb) => {
   }
   cb('Erreur : uniquement des images (JPEG, PNG, GIF) sont autorisées.');
 };
-
 const upload = multer({ storage, fileFilter });
-
-// Route pour téléverser une image
-app.post('/api/upload', upload.single('cover'), (req, res) => {
+app.post('/upload', upload.single('cover'), (req, res) => {
   res.send({
     message: 'Image téléchargée avec succès',
     image: `/uploads/${req.file.filename}`
@@ -103,8 +100,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Route pour envoyer un email
-app.post('/api/send-email', async (req, res) => {
+app.post('/send-email', async (req, res) => {
   try {
     const info = await transporter.sendMail({
       from: `"${process.env.FROM_NAME}" <${process.env.FROM_EMAIL}>`,
@@ -118,21 +114,6 @@ app.post('/api/send-email', async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de l\'envoi de l\'email', error });
   }
 });
-
-// Configuration de production pour servir le frontend
-if (isProduction) {
-  // Serve les fichiers statiques du frontend
-  app.use(express.static(path.join(__dirname, 'client')));
-
-  // Route pour toutes les routes non-API (SPA fallback)
-  app.get(/^\/(?!api).*/, (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'index.html'));
-  });
-} else {
-  app.get('/', (req, res) => {
-    res.send('API est en mode développement...');
-  });
-}
 
 // Middlewares de gestion des erreurs
 app.use(notFound);
