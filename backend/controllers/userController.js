@@ -57,7 +57,7 @@ const registerUser = asyncHandler(async (req, res) => {
       await sendEmail({
         email: user.email,
         subject: 'Bienvenue sur Krysto.io!',
-        message,
+         html :message,
         isHtml: true, // Utilise le template HTML
       });
       console.log(`Email de bienvenue envoyé à ${user.email}`);
