@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useGetProductsQuery } from "../../slices/productsApiSlice";
+import Loader from "../../components/shared/Loader";
 
 const BoutiqueScreen = () => {
   const { data, isLoading, error } = useGetProductsQuery();
@@ -9,7 +10,7 @@ const BoutiqueScreen = () => {
   const products = data ? data.products : [];
 
   if (isLoading) {
-    return <div>Chargement...</div>; // Affiche un message de chargement pendant la requête
+    return <Loader />; // Affiche un message de chargement pendant la requête
   }
 
   if (error) {

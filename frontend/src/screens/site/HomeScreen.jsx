@@ -19,7 +19,7 @@ const HomeScreen = () => {
           <Link to={"/a-propos"} className="btn btn-primary">
             En savoir plus
           </Link>
-          <Link to={"/krysto-shop"} className="btn btn-primary">
+          <Link to={"/boutique"} className="btn btn-primary">
             Découvrir
           </Link>
         </div>
