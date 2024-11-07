@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logout } from '../path/to/your/slice/authSlice'; // Assurez-vous que le chemin d'import est correct
+import { logout } from '../../slices/authSlice'; // Assurez-vous que le chemin d'import est correct
 
 const AdminSidebar = ({ children }) => {
   const dispatch = useDispatch();
