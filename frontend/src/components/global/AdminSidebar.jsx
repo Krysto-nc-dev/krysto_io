@@ -49,33 +49,6 @@ const AdminSidebar = ({ children }) => {
 
       {/* Content area */}
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
-        <div className="flex items-center justify-between bg-gray-100 p-4 shadow-md">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-gray-800 focus:outline-none md:hidden"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h7"
-              />
-            </svg>
-          </button>
-          <div className="text-xl font-bold">Krysto Administration</div>
-          <div className="flex space-x-4">
-            {/* Search and notifications icons can be added here if needed */}
-          </div>
-        </div>
-
         {/* Main content */}
         <div className="p-4">{children}</div>
       </div>

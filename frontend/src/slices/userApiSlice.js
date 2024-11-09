@@ -1,6 +1,7 @@
 // Import necessary constants and the apiSlice
-import { apiSlice } from './apiSlice'
-import { USERS_URL } from './constants.js'
+import { apiSlice } from './apiSlice';
+import { USERS_URL } from './constants.js';
+
 // Use apiSlice to inject endpoints
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,6 +11,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/login`,
         method: 'POST',
         body: data,
+        credentials: 'include', // Permet d'envoyer les cookies avec la requête
       }),
     }),
 
@@ -19,6 +21,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}`,
         method: 'POST',
         body: data,
+        credentials: 'include', // Permet d'envoyer les cookies avec la requête
       }),
       invalidatesTags: ['User'], // Invalider les utilisateurs après un ajout
     }),
@@ -28,6 +31,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${USERS_URL}/logout`,
         method: 'POST',
+        credentials: 'include', // Permet d'envoyer les cookies avec la requête
       }),
     }),
 
@@ -37,6 +41,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/profile`,
         method: 'PUT',
         body: data,
+        credentials: 'include', // Permet d'envoyer les cookies avec la requête
       }),
     }),
 
@@ -44,16 +49,18 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     getUsers: builder.query({
       query: () => ({
         url: `${USERS_URL}`,
+        credentials: 'include', // Permet d'envoyer les cookies avec la requête
       }),
       providesTags: ['User'],
       keepUnusedDataFor: 5,
     }),
 
-    // New deleteUsers mutation
+    // New deleteUser mutation
     deleteUser: builder.mutation({
       query: (userId) => ({
         url: `${USERS_URL}/${userId}`,
         method: 'DELETE',
+        credentials: 'include', // Permet d'envoyer les cookies avec la requête
       }),
       invalidatesTags: ['User'],
     }),
@@ -62,6 +69,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     getUserDetails: builder.query({
       query: (userId) => ({
         url: `${USERS_URL}/${userId}`,
+        credentials: 'include', // Permet d'envoyer les cookies avec la requête
       }),
       keepUnusedDataFor: 5,
     }),
@@ -72,11 +80,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/${data.userId}`,
         method: 'PUT',
         body: data,
+        credentials: 'include', // Permet d'envoyer les cookies avec la requête
       }),
       invalidatesTags: ['User'],
     }),
   }),
-})
+});
 
 // Export the generated hooks
 export const {
@@ -88,4 +97,4 @@ export const {
   useDeleteUserMutation, // Added
   useGetUserDetailsQuery, // Added
   useUpdateUserMutation,
-} = usersApiSlice
+} = usersApiSlice;

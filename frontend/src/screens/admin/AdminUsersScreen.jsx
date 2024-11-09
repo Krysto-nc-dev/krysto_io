@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useGetUsersQuery, useRegisterMutation, useDeleteUserMutation } from "../../slices/userApiSlice";
+import {
+  useGetUsersQuery,
+  useRegisterMutation,
+  useDeleteUserMutation,
+} from "../../slices/userApiSlice";
 
 const AdminUsers = () => {
   const { data: users, isLoading, error } = useGetUsersQuery();
   const [isModalOpen, setModalOpen] = useState(false);
   const [userList, setUserList] = useState([]);
-  
-  useEffect(() => {
-    if (users) {
-      setUserList(users);
-    }
-  }, [users]);
-
-  const [registerUser, { isLoading: isRegistering, error: registerError }] = useRegisterMutation();
+  const [registerUser, { isLoading: isRegistering, error: registerError }] =
+    useRegisterMutation();
   const [deleteUser] = useDeleteUserMutation();
 
   const [newUser, setNewUser] = useState({
@@ -22,6 +20,12 @@ const AdminUsers = () => {
     role: "User",
     password: "",
   });
+
+  useEffect(() => {
+    if (users) {
+      setUserList(users);
+    }
+  }, [users]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,12 +41,19 @@ const AdminUsers = () => {
       return;
     }
 
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
+    if (
+      window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")
+    ) {
       try {
         await deleteUser(userId).unwrap();
-        setUserList((prevUsers) => prevUsers.filter((user) => user._id !== userId));
+        setUserList((prevUsers) =>
+          prevUsers.filter((user) => user._id !== userId)
+        );
       } catch (error) {
-        console.error("Erreur lors de la suppression de l'utilisateur :", error);
+        console.error(
+          "Erreur lors de la suppression de l'utilisateur :",
+          error
+        );
       }
     }
   };
@@ -74,55 +85,106 @@ const AdminUsers = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Gestion des utilisateurs</h1>
-        <button className="btn btn-primary" onClick={handleAddUser}>
+    <div style={{ padding: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <h1 style={{ fontSize: "24px", fontWeight: "bold" }}>
+          Gestion des utilisateurs
+        </h1>
+        <button
+          onClick={handleAddUser}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+          }}
+        >
           Ajouter un utilisateur
         </button>
       </div>
 
       <div>
         {isLoading ? (
-          <div className="flex justify-center"><span className="loading loading-spinner text-primary"></span></div>
+          <div style={{ textAlign: "center" }}>
+            <span>Chargement...</span>
+          </div>
         ) : error ? (
-          <p className="text-red-500">Erreur de chargement des utilisateurs</p>
+          <p style={{ color: "red" }}>Erreur de chargement des utilisateurs</p>
         ) : (
-          <table className="table w-full bg-base-100 shadow-md">
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              marginBottom: "20px",
+            }}
+          >
             <thead>
               <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Rôle</th>
-                <th>Actions</th>
+                <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+                  Prénom
+                </th>
+                <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+                  Nom
+                </th>
+                <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+                  Email
+                </th>
+                <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+                  Rôle
+                </th>
+                <th style={{ border: "1px solid #ddd", padding: "8px" }}>
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {userList.map((user) => (
                 <tr key={user._id}>
-                  <td>{user.name}</td>
-                  <td>{user.lastname}</td>
-                  <td>{user.email}</td>
-                  <td>
-                    <span
-                      className={`badge ${
-                        user.role === "Admin" ? "badge-error" :
-                        user.role === "User" ? "badge-success" :
-                        "badge-warning"
-                      }`}
-                    >
-                      {user.role}
-                    </span>
+                  <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                    {user.name}
                   </td>
-                  <td>
+                  <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                    {user.lastname}
+                  </td>
+                  <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                    {user.email}
+                  </td>
+                  <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                    {user.role}
+                  </td>
+                  <td style={{ border: "1px solid #ddd", padding: "8px" }}>
                     <button
-                      className="btn btn-sm btn-error mr-2"
                       onClick={() => handleDeleteUser(user._id, user.role)}
+                      style={{
+                        marginRight: "10px",
+                        padding: "5px 10px",
+                        backgroundColor: "red",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "4px",
+                      }}
                     >
                       Supprimer
                     </button>
-                    <button className="btn btn-sm btn-info">Modifier</button>
+                    <button
+                      style={{
+                        padding: "5px 10px",
+                        backgroundColor: "gray",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      Modifier
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -133,10 +195,41 @@ const AdminUsers = () => {
 
       {/* Modal pour ajouter un utilisateur */}
       {isModalOpen && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">Ajouter un nouvel utilisateur</h3>
-            {registerError && <p className="text-red-500">Erreur : {registerError.data.message}</p>}
+        <div
+          style={{
+            position: "fixed",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "20px",
+              borderRadius: "4px",
+              width: "300px",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "18px",
+                fontWeight: "bold",
+                marginBottom: "10px",
+              }}
+            >
+              Ajouter un nouvel utilisateur
+            </h3>
+            {registerError && (
+              <p style={{ color: "red" }}>
+                Erreur : {registerError.data.message}
+              </p>
+            )}
             <form>
               <input
                 type="text"
@@ -144,7 +237,7 @@ const AdminUsers = () => {
                 name="name"
                 value={newUser.name}
                 onChange={handleInputChange}
-                className="input input-bordered w-full mt-4"
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
               />
               <input
                 type="text"
@@ -152,7 +245,7 @@ const AdminUsers = () => {
                 name="lastname"
                 value={newUser.lastname}
                 onChange={handleInputChange}
-                className="input input-bordered w-full mt-4"
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
               />
               <input
                 type="email"
@@ -160,7 +253,7 @@ const AdminUsers = () => {
                 name="email"
                 value={newUser.email}
                 onChange={handleInputChange}
-                className="input input-bordered w-full mt-4"
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
               />
               <input
                 type="password"
@@ -168,24 +261,47 @@ const AdminUsers = () => {
                 name="password"
                 value={newUser.password}
                 onChange={handleInputChange}
-                className="input input-bordered w-full mt-4"
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
               />
               <select
                 name="role"
                 value={newUser.role}
                 onChange={handleInputChange}
-                className="select select-bordered w-full mt-4"
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
               >
                 <option value="Admin">Admin</option>
                 <option value="User">User</option>
                 <option value="Private">Private</option>
               </select>
             </form>
-            <div className="modal-action">
-              <button className="btn btn-error" onClick={handleCloseModal}>Annuler</button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "10px",
+              }}
+            >
               <button
-                className={`btn btn-primary ${isRegistering && "loading"}`}
+                onClick={handleCloseModal}
+                style={{
+                  padding: "8px 16px",
+                  backgroundColor: "gray",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                }}
+              >
+                Annuler
+              </button>
+              <button
                 onClick={handleConfirmAddUser}
+                style={{
+                  padding: "8px 16px",
+                  backgroundColor: "#007bff",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                }}
               >
                 {isRegistering ? "Ajout..." : "Ajouter"}
               </button>
