@@ -24,6 +24,7 @@ import BoutiqueScreen from "./screens/site/BoutiqueScreen.jsx";
 import NotFound from "./screens/NotFound.jsx";
 import RegisterScreen from "./screens/site/RegisterScreen.jsx";
 import ProductScreen from "./screens/site/ProductScreen.jsx";
+import AdminGetThirdPartiesScreen from "./screens/admin/AdminGetThirdPartiesScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +49,7 @@ const router = createBrowserRouter(
         {/* Routes spécifiques aux administrateurs */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-users" element={<AdminUsersScreen />} />
+        <Route path="/admin-tiers" element={<AdminGetThirdPartiesScreen />} />
       </Route>
 
       {/* User Routes */}

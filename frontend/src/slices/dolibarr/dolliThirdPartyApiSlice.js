@@ -1,4 +1,4 @@
-import { DOLIBAR_URL, DOLIBARR_API_KEY } from '../../constants'
+import { DOLIBAR_URL, DOLIBARR_API_KEY } from '../constants'
 import { apiSlice } from '../apiSlice'
 
 export const dolliThirdPartyApiSlice = apiSlice.injectEndpoints({
@@ -24,7 +24,7 @@ export const dolliThirdPartyApiSlice = apiSlice.injectEndpoints({
         return {
           url: url,
           headers: {
-            DOLAPIKEY: DOLIBARR_API_KEY,
+            DOLAPIKEY: "eqhTZrONIar69OQ16r3I0861z3BtOsRe",
           },
         }
       },

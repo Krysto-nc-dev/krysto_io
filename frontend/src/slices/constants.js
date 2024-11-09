@@ -4,5 +4,5 @@ export const BASE_URL = process.env.NODE_ENV === 'production'
 
 export const USERS_URL = `${BASE_URL}/users`;
 export const PRODUCTS_URL = `${BASE_URL}/products`;
-export const DOLIBAR_URL = 'https://crm.krysto.nc/api/index.php';
-export const DOLIBARR_API_KEY = 'IQhnZ7jq08asIF2RZVkxRJ03a918T5um';
+export const DOLIBAR_URL = 'https://krystotest-erp.square.nc/api/index.php';
+export const DOLIBARR_API_KEY = 'eqhTZrONIar69OQ16r3I0861z3BtOsRe';
