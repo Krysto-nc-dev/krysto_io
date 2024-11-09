@@ -34,10 +34,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configuration CORS en fonction de l'environnement
 const allowedOrigins = [
-  'http://localhost:3000',
-  'https://krysto.io',
-  'https://api.krysto.io'
+  'http://localhost:3000', // Pour le développement en local
+  'https://krysto.io',     // Domaine principal en production
+  'https://api.krysto.io'  // Sous-domaine API en production
 ];
+
 app.use(cors({
   credentials: true,
   origin: function (origin, callback) {
@@ -122,7 +123,7 @@ app.post('/send-email', async (req, res) => {
   }
 });
 
-// Middlewares de gestion des erreurs
+// Middleware de gestion des erreurs
 app.use(notFound);
 app.use(errorHandler);
 
