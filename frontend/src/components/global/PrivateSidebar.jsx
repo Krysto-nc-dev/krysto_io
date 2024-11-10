@@ -30,6 +30,38 @@ const PrivateSidebar = ({ children }) => {
               Dashboard
             </Link>
           </li>
+          <li>
+            <Link
+              to="/private-plastic-colors"
+              className="block px-4 py-2 hover:bg-gray-700"
+            >
+              Couleurs plastique
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/private-plastic-types"
+              className="block px-4 py-2 hover:bg-gray-700"
+            >
+              Types plastique
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/private-tiers"
+              className="block px-4 py-2 hover:bg-gray-700"
+            >
+              Tiers
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/private-entrepots"
+              className="block px-4 py-2 hover:bg-gray-700"
+            >
+              Entrepots
+            </Link>
+          </li>
         </ul>
         <button
           onClick={handleLogout}

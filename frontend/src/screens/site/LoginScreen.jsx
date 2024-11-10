@@ -142,6 +142,8 @@ const LoginScreen = () => {
       } else if (userInfo.role === "User") {
         // Redirection pour les utilisateurs normaux
         navigate("/user-dashboard");
+      } else if (userInfo.role === "Private") {
+        navigate("/private-dashboard");
       } else {
         // Redirection vers la page par défaut
         navigate(redirect);

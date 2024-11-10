@@ -5,12 +5,16 @@ import PrivateLayout from "../layouts/PrivateLayout";
 const PrivateRoutes = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
-  return userInfo ? (
+  if (!userInfo) {
+    return <Navigate to="/connexion" replace />;
+  }
+
+  return userInfo.role === "Private" ? (
     <PrivateLayout>
       <Outlet />
     </PrivateLayout>
   ) : (
-    <Navigate to="/login" replace />
+    <Navigate to="/connexion" replace />
   );
 };
 

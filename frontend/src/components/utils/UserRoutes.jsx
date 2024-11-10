@@ -1,17 +1,14 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import UserLayout from "../layouts/UserLayout";
 
-const UserRoutes = () => {
+const UserRoute = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
-  return userInfo && !userInfo.isAdmin ? (
-    <UserLayout>
-      <Outlet />
-    </UserLayout>
+  return userInfo && userInfo.role === "User" ? (
+    <Outlet />
   ) : (
     <Navigate to="/" replace />
   );
 };
 
-export default UserRoutes;
+export default UserRoute;

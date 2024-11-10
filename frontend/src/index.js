@@ -27,14 +27,18 @@ import ProductScreen from "./screens/site/ProductScreen.jsx";
 import RecyclableProductsScreen from "./screens/site/RecyclableProductsScreen.jsx";
 import AboutScreen from "./screens/site/AboutScreen.jsx";
 import PrivateDashboard from "./screens/Private/PrivateDashboard.jsx";
-import AdminThirdParties from "./screens/admin/AdminThirdParties.jsx";
+import PrivatePlasticTypesScreen from "./screens/Private/PrivatePlasticTypesScreen.jsx";
+import PrivatePlasticColorsScreen from "./screens/Private/PrivatePlasticColorsScreen.jsx";
+import PrivateThirpartiesScreen from "./screens/Private/PrivateThirpartiesScreen.jsx";
+import PrivateWarehousesScreen from "./screens/Private/PrivateWarehousesScreen.jsx";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/connexion" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
-        <Route path="/admin-tiers" element={<AdminThirdParties/>} />
+   
       {/* Public Routes */}
       <Route path="/" element={<PublicLayout />}>
         <Route index={true} path="/" element={<HomeScreen />} />
@@ -50,6 +54,10 @@ const router = createBrowserRouter(
 
         {/* Routes spécifiques aux utilisateurs privés */}
         <Route path="/private-dashboard" element={<PrivateDashboard />} />
+        <Route path="/private-plastic-types" element={<PrivatePlasticTypesScreen/>} />
+        <Route path="/private-plastic-colors" element={<PrivatePlasticColorsScreen/>} />
+        <Route path="/private-tiers" element={<PrivateThirpartiesScreen/>} />
+        <Route path="/private-entrepots" element={<PrivateWarehousesScreen/>} />
       </Route>
 
       {/* Admin Routes */}
