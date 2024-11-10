@@ -10,6 +10,12 @@ import User from "./models/userModel.js";
 import connectDB from "./config/db.js";
 import Product from "./models/productModel.js";
 import products from "./data/products.js";
+import plasticColors from "./data/plastic_colors.js";
+import plasticTypes from "./data/plastic_types.js";
+import PlasticColor from "./models/plasticColorModel.js";
+import PlasticType from "./models/plasticTypeModel.js";
+import RecyclableProduct from "./models/recyclableProductModel.js";
+import recyclableProducts from "./data/recyclable_products.js";
 
 dotenv.config();
 
@@ -20,6 +26,9 @@ const importData = async () => {
     // Suppression des données existantes
     await User.deleteMany();
     await Product.deleteMany();
+    await PlasticColor.deleteMany()
+    await PlasticType.deleteMany()
+    await RecyclableProduct.deleteMany()
    
 
     // Insertion de nouvelles données
@@ -31,6 +40,9 @@ const importData = async () => {
     });
 
     await Product.insertMany(sampleProducts);
+    await PlasticColor.insertMany(plasticColors)
+    await PlasticType.insertMany(plasticTypes)
+    /await RecyclableProduct.insertMany(recyclableProducts)
 
     console.log("Data Imported!".green.inverse);
     process.exit();
@@ -44,6 +56,9 @@ const destroyData = async () => {
   try {
     await User.deleteMany();
     await Product.deleteMany();
+    await PlasticColor.deleteMany()
+    await PlasticType.deleteMany()
+    await RecyclableProduct.deleteMany()
    
 
     console.log("Data Destroyed!".red.inverse);

@@ -12,6 +12,9 @@ import connectDB from './config/db.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import plasticColorRoutes from './routes/plasticColorRoutes.js';
+import plasticTypeRoutes from './routes/plasticTypeRoutes.js';
+import recyclableProductRoutes from './routes/recyclableProductRoutes.js';
 
 // Définition de __dirname et __filename pour un module ES
 const __filename = fileURLToPath(import.meta.url);
@@ -67,6 +70,9 @@ app.get('/', (req, res) => {
 });
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);
+app.use('/plastic-types', plasticTypeRoutes);
+app.use('/plastic-colors', plasticColorRoutes);
+app.use('/recyclable-products', recyclableProductRoutes);
 
 // Gestion des téléversements avec Multer
 const storage = multer.diskStorage({

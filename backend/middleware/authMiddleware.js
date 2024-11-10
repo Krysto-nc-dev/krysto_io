@@ -26,11 +26,11 @@ const protect = asyncHandler(async (req, res, next) => {
 
 // Admin middleware
 const admin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
+  if (req.user && req.user.role === 'Admin') {
     next()
   } else {
     res.status(401)
-    throw new Error("Vous devez etre administrateur pour accéder à cette ressource")
+    throw new Error("Vous devez être administrateur pour accéder à cette ressource")
   }
 }
 

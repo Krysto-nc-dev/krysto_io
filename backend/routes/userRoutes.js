@@ -1,5 +1,5 @@
-import express from 'express'
-const router = express.Router()
+import express from 'express';
+const router = express.Router();
 import {
   authUser,
   registerUser,
@@ -10,21 +10,34 @@ import {
   getUserById,
   deleteUser,
   updateUser,
-} from '../controllers/userController.js'
+  forgotPassword, // Import de forgotPassword
+} from '../controllers/userController.js';
 
-import { protect, admin } from '../middleware/authMiddleware.js'
+import { protect, admin } from '../middleware/authMiddleware.js';
 
-router.route('/').post(registerUser).get(protect, getUsers)
-router.post('/logout', logoutUser)
-router.post('/login', authUser)
+// Route pour enregistrer un utilisateur ou obtenir tous les utilisateurs (pour les admins)
+router.route('/').post(registerUser).get(protect, admin, getUsers);
+
+// Route pour déconnecter un utilisateur
+router.post('/logout', logoutUser);
+
+// Route pour l'authentification d'un utilisateur
+router.post('/login', authUser);
+
+// Route pour mot de passe oublié
+router.post('/forgotpassword', forgotPassword); // Nouvelle route pour forgotPassword
+
+// Routes pour le profil de l'utilisateur
 router
   .route('/profile')
   .get(protect, getUserProfile)
-  .put(protect, updateUserProfile)
+  .put(protect, updateUserProfile);
+
+// Routes pour la gestion des utilisateurs spécifiques par ID (admin requis)
 router
   .route('/:id')
-  .delete(protect, deleteUser)
-  .get(protect, getUserById)
-  .put(protect, updateUser)
+  .delete(protect, admin, deleteUser)
+  .get(protect, admin, getUserById)
+  .put(protect, admin, updateUser);
 
-export default router
+export default router;
