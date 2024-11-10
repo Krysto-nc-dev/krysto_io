@@ -1,17 +1,20 @@
 import React from "react";
 
 import PrivateSidebar from "../global/PrivateSidebar";
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
 
 const PrivateLayout = ({ children }) => {
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <div className="w-64">
-        <PrivateSidebar />
+    <div className="flex flex-row bg-neutral h-screen w-screen overflow-hidden ">
+      <PrivateSidebar />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <Header className="fixed w-full top-0 z-10" />
+        <div className=" pl-8  p-4 overflow-auto ml-12 ">
+          <Outlet />
+        </div>
       </div>
-
-      {/* Main Content Area */}
-      <div className="flex-1 p-4 overflow-auto">{children}</div>
+      {/* <footer>Footer</footer> */}
     </div>
   );
 };
