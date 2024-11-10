@@ -20,14 +20,14 @@ const recyclableProductSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.ObjectId,
         ref: 'Plastic_type',
-        required: true,
+     
       },
     ],
     colors: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'PlasticColor', // Référence au modèle des couleurs de plastique
-        required: true,
+     
       },
     ],
     weightGr: {

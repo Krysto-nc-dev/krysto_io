@@ -28,7 +28,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL, DOLIBAR_URL } from './constants.js';
 
 // Définition des tags pour le cache des endpoints
-const tagTypes = ['Product', 'User'];
+const tagTypes = ['Product', 'User', 'RecyclableProduct'];
 
 // Configuration de la requête de base pour l'API principale
 const baseQuery = fetchBaseQuery({

@@ -115,7 +115,7 @@ const PublicHeader = () => {
       {isMobileMenuOpen && (
         <div
           ref={menuRef}
-          className="absolute top-0 left-0 w-full bg-gray-900 lg:hidden z-50 p-4"
+          className="absolute top-0 left-0 w-full bg-gray-700 lg:hidden z-50 p-4"
         >
           <div className="flex justify-between items-center">
             <Link to={"/"}>
@@ -137,24 +137,25 @@ const PublicHeader = () => {
             </Link>
             <Link
               className="flex items-center text-white hover:text-secondaryColor hover:font-bold"
-              to={"/boutique"}
+              to={"/caisse"}
               onClick={toggleMobileMenu}
             >
-              <ShoppingBasket className="w-[20px] mr-2" /> Nos produits
+              <ShoppingBasket className="w-[20px] mr-2" /> Caisse
             </Link>
             <Link
               className="flex items-center text-white hover:text-secondaryColor hover:font-bold"
-              to={"/initiations"}
+              to={"/repporting"}
               onClick={toggleMobileMenu}
             >
-              <RecycleIcon className="w-[20px] mr-2" /> Initiations
+              <RecycleIcon className="w-[20px] mr-2" />
+              Repporting
             </Link>
             <Link
               className="flex items-center text-white hover:text-secondaryColor hover:font-bold"
               to={"/blog"}
               onClick={toggleMobileMenu}
             >
-              <Newspaper className="w-[20px] mr-2" /> Blog
+              <Newspaper className="w-[20px] mr-2" /> gestion de stocks
             </Link>
             <Link
               className="flex items-center text-white hover:text-secondaryColor hover:font-bold"

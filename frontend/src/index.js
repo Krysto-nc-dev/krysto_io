@@ -24,23 +24,32 @@ import BoutiqueScreen from "./screens/site/BoutiqueScreen.jsx";
 import NotFound from "./screens/NotFound.jsx";
 import RegisterScreen from "./screens/site/RegisterScreen.jsx";
 import ProductScreen from "./screens/site/ProductScreen.jsx";
+import RecyclableProductsScreen from "./screens/site/RecyclableProductsScreen.jsx";
+import AboutScreen from "./screens/site/AboutScreen.jsx";
+import PrivateDashboard from "./screens/Private/PrivateDashboard.jsx";
+import AdminThirdParties from "./screens/admin/AdminThirdParties.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/connexion" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
+        <Route path="/admin-tiers" element={<AdminThirdParties/>} />
       {/* Public Routes */}
       <Route path="/" element={<PublicLayout />}>
         <Route index={true} path="/" element={<HomeScreen />} />
         <Route path="/initiations" element={<InitiationsScreen />} />
+        <Route path="/a-propos" element={<AboutScreen/>} />
         <Route path="/boutique" element={<BoutiqueScreen />} />
         <Route path='/product/:id' element={<ProductScreen/>} />
+        <Route path='/produits-recyclables' element={<RecyclableProductsScreen/>} />
       </Route>
 
       {/* Private Routes */}
       <Route path="/" element={<PrivateRoutes />}>
+
         {/* Routes spécifiques aux utilisateurs privés */}
+        <Route path="/private-dashboard" element={<PrivateDashboard />} />
       </Route>
 
       {/* Admin Routes */}

@@ -1,30 +1,17 @@
 import React from "react";
-// import Topbar from "../global/Topbar";
-// import AdminSidebar from "../global/AdminSidebar";
+
+import PrivateSidebar from "../global/PrivateSidebar";
 
 const PrivateLayout = ({ children }) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        width: "100vw",
-        overflow: "hidden",
-      }}
-    >
-      {/* <AdminSidebar /> */}
-
-      <div
-        style={{
-          flexGrow: 1,
-          transition: "margin-left 0.3s ease",
-          backgroundColor: "#f0f0f0",
-          boxSizing: "border-box",
-        }}
-      >
-      
-        <div style={{ marginLeft: "71px", padding: "16px" }}>{children}</div>
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <div className="w-64">
+        <PrivateSidebar />
       </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 p-4 overflow-auto">{children}</div>
     </div>
   );
 };
